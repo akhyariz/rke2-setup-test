@@ -331,17 +331,4 @@ sudo systemctl start rke2-agent.service
 sudo journalctl -u rke2-agent -f
 ```
 
-**Install kubectl**
-```
-sudo ln -s /var/lib/rancher/rke2/bin/* /usr/local/bin/
-mkdir -p $HOME/.kube
-sudo cp -i /etc/rancher/rke2/rke2.yaml $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-```
-
-```
-kubectl get nodes
-```
-
-
 *To be continued...*
