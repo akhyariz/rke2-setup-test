@@ -324,7 +324,7 @@ node-name: rke2-worker1
 ```
 
 ```
-sudo systemctl enable rke2-agtent.service
+sudo systemctl enable rke2-agent.service
 sudo systemctl start rke2-agent.service
 ```
 ```
