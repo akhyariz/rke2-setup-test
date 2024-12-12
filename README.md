@@ -259,7 +259,7 @@ write-kubeconfig-mode: 600
 tls-san: 
   - rke2.rancher.com
   - 192.168.1.110
-node-name: rke2-master2
+node-name: rke2-master3
 ```
 
 ```
@@ -281,5 +281,67 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 kubectl get nodes
 ```
+
+# VM Worker1
+
+**Disable Firewall**
+
+```
+sudo iptables -L
+sudo firewall-cmd --list-all
+sudo systemctl stop firewalld.service 
+sudo systemctl disable firewalld.service 
+sudo iptables -L
+```
+
+**Important**: If your node has NetworkManager installed and enabled, ensure that it is configured to [ignore CNI-managed interfaces](https://docs.rke2.io/known_issues#networkmanager).
+
+```
+sudo vi /etc/NetworkManager/conf.d/rke2-canal.conf
+```
+```
+[keyfile]
+unmanaged-devices=interface-name:cali*;interface-name:flannel*
+```
+```
+sudo systemctl reload NetworkManager
+```
+
+
+### Install RKE2-Server
+```
+curl -sfL https://get.rke2.io -o install.sh
+chmod +x ./install.sh
+sudo INSTALL_RKE2_TYPE="agent" ./install.sh 
+```
+```
+sudo vi /etc/rancher/rke2/config.yaml
+```
+```
+server: https://192.168.1.110:9345
+token: K10e33baf29e6cfc7a7b903481d658b17552ce4add96effa20cb904fe556a9b3034::server:ea5189cde8a2a194c0734a79b60a3137
+node-name: rke2-worker1
+```
+
+```
+sudo systemctl enable rke2-agtent.service
+sudo systemctl start rke2-agent.service
+```
+```
+sudo journalctl -u rke2-agent -f
+```
+
+**Install kubectl**
+```
+sudo ln -s /var/lib/rancher/rke2/bin/* /usr/local/bin/
+mkdir -p $HOME/.kube
+sudo cp -i /etc/rancher/rke2/rke2.yaml $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+```
+kubectl get nodes
+```
+
 
 *To be continued...*
