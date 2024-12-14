@@ -36,9 +36,10 @@ sudo INSTALL_RKE2_TYPE="server" ./install.sh
 sudo vi /etc/rancher/rke2/config.yaml
 ```
 ```
+token: K10e33baf29e6cfc7a7b903481d658b17552ce4add96effa20cb904fe556a9b3034::server:ea5189cde8a2a194c0734a79b60a3137
 write-kubeconfig-mode: 600
 tls-san: 
-  - rke2.rancher.com
+  - rke2.ranchercluster.com
   - 192.168.1.110
 node-name: rke2-master1
 ```
@@ -192,7 +193,7 @@ server: https://192.168.1.110:9345
 token: K10e33baf29e6cfc7a7b903481d658b17552ce4add96effa20cb904fe556a9b3034::server:ea5189cde8a2a194c0734a79b60a3137
 write-kubeconfig-mode: 600
 tls-san: 
-  - rke2.rancher.com
+  - rke2.ranchercluster.com
   - 192.168.1.110
 node-name: rke2-master2
 ```
@@ -257,7 +258,7 @@ server: https://192.168.1.110:9345
 token: K10e33baf29e6cfc7a7b903481d658b17552ce4add96effa20cb904fe556a9b3034::server:ea5189cde8a2a194c0734a79b60a3137
 write-kubeconfig-mode: 600
 tls-san: 
-  - rke2.rancher.com
+  - rke2.ranchercluster.com
   - 192.168.1.110
 node-name: rke2-master3
 ```
